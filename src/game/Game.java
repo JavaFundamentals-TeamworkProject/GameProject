@@ -23,6 +23,7 @@ public class Game implements Runnable{
 
     public static Player player;
     public static Ball ball;
+    public static Bricks bricks;
 
     public Game(String title, int height, int width) {
         this.title = title;
@@ -38,6 +39,7 @@ public class Game implements Runnable{
 
         player = new Player();
         ball = new Ball();
+        bricks = new Bricks();
     }
 
     private  void tick(){
@@ -45,6 +47,8 @@ public class Game implements Runnable{
         player.tick();
         //update ball
         ball.tick();
+        //update bricks
+        bricks.tick();
     }
     private  void render(){
         this.bs = display.getCanvas().getBufferStrategy();
@@ -94,7 +98,7 @@ public class Game implements Runnable{
                 delta--;
             }
             if(timer >= 1_000_000_000){
-               
+
                 timer = 0;
                 ticks = 0;
             }

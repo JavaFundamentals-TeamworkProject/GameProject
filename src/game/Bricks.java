@@ -2,16 +2,17 @@ package game;
 
 import java.awt.*;
 
-public class Ball {
-    //Constructor
-    public Ball(){
+
+public class Bricks {
+
+    public Bricks(){
 
     }
-    //update
+
     public void tick(){
 
     }
-    //draw
+    
     public void render(Graphics g){
 
     }

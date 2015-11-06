@@ -14,7 +14,13 @@ public class InputHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
 
+        if (keyCode == KeyEvent.VK_LEFT){
+            Game.isMovingLeft = true;
+        }else if (keyCode == KeyEvent.VK_RIGHT){
+            Game.isMovingRight = true;
+        }
     }
 
     @Override
@@ -23,6 +29,12 @@ public class InputHandler implements KeyListener {
     }
     @Override
     public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
 
+        if (keyCode == KeyEvent.VK_LEFT){
+            Game.isMovingLeft = false;
+        }else if (keyCode == KeyEvent.VK_RIGHT){
+            Game.isMovingRight = false;
+        }
     }
 }

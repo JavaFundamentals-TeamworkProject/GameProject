@@ -19,31 +19,24 @@ public class Display extends Canvas {
         createDisplay();
     }
 
+
     private void createDisplay() {
 
-        frame = new JFrame(this.title);
+        this.frame = new JFrame(this.title);
+        this.frame.setSize(this.width,this.height);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setResizable(false);
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setVisible(true);
+        this.frame.setFocusable(true);
 
-        frame.setSize(this.width,this.height);
+        this.canvas = new Canvas();
+        this.canvas.setPreferredSize(new Dimension(width,height));
+        this.canvas.setMaximumSize(new Dimension(width,height));
+        this.canvas.setMinimumSize(new Dimension(width,height));
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.setResizable(false);
-
-        frame.setLocationRelativeTo(null);
-
-        frame.setVisible(true);
-
-        frame.setFocusable(true);
-
-        canvas = new Canvas();
-
-        canvas.setPreferredSize(new Dimension(width,height));
-
-        canvas.setMaximumSize(new Dimension(width,height));
-        canvas.setMinimumSize(new Dimension(width,height));
-
-        frame.add(canvas);
-        frame.pack();
+        this.frame.add(canvas);
+        this.frame.pack();
     }
 
     public Canvas getCanvas() {return this.canvas; }

@@ -7,9 +7,11 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+
 public class Game implements Runnable{
     private Display display;
-    public int width,height;
+
+    public  static int width,height;
     public String title;
 
     private boolean running = false;
@@ -25,19 +27,30 @@ public class Game implements Runnable{
     public static Ball ball;
     public static Bricks bricks;
 
+    public static boolean isMovingLeft;
+    public static boolean isMovingRight;
+
     public Game(String title, int height, int width) {
+
         this.title = title;
         this.height = height;
         this.width = width;
+
+    }
+
+
+    public Player getPlayer(){
+        return this.player;
     }
 
     private void init(){
-        display = new Display(this.title, this.width, this.height);
+        this.display = new Display(this.title, this.width, this.height);
         img = gfx.ImageLoader.loadImage("/background.png");
 
-        inputHandler = new InputHandler(this.display);
+        this.inputHandler = new InputHandler(this.display);
 
-        player = new Player();
+
+        player = new Player((width - 111) / 2, height - 19, 111, 19);
         ball = new Ball();
         bricks = new Bricks();
     }
@@ -62,7 +75,8 @@ public class Game implements Runnable{
         g.clearRect(0,0, this.width, this.height);
         g.drawImage(img,0,0,this.width, this.height, null);
         //Start draw
-
+        player.tick();
+        player.render(g);
 
 
         //End draw
@@ -73,7 +87,7 @@ public class Game implements Runnable{
 
     @Override
     public void run() {
-        init();
+        this.init();
 
         int fps = 60;
         double timePerTick = 1_000_000_000.0 / fps;
@@ -111,8 +125,9 @@ public class Game implements Runnable{
         }
 
         running = true;
-        thread = new Thread(this);
-        thread.start();
+        this.thread = new Thread(this);
+
+        this.thread.start();
     }
     public synchronized void stop() {
         if(!running){

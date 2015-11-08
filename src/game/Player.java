@@ -7,7 +7,7 @@ public class Player {
     private int playerWidth;
     private int playerHeight;
     private int x, y;
-    private Rectangle boundingBox;
+    public Rectangle boundingBox;
 
 
     //Constructor
@@ -26,7 +26,6 @@ public class Player {
 
         //set box bounds
         this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerWidth);
-
         //move pad
         if (Game.isMovingLeft){
             this.x += -4;

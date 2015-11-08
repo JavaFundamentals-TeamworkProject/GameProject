@@ -38,11 +38,6 @@ public class Game implements Runnable{
 
     }
 
-
-    public Player getPlayer(){
-        return this.player;
-    }
-
     private void init(){
         this.display = new Display(this.title, this.width, this.height);
         img = gfx.ImageLoader.loadImage("/background.png");

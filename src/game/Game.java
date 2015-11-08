@@ -46,8 +46,8 @@ public class Game implements Runnable{
 
 
         player = new Player((width - 111) / 2, height - 19, 111, 19);
-        ball = new Ball();
         bricks = new Bricks();
+        ball = new Ball(gfx.ImageLoader.loadImage("/ball.png"),player.boundingBox, this.width, this.height,2);
     }
 
     private  void tick(){
@@ -72,6 +72,8 @@ public class Game implements Runnable{
         //Start draw
         player.tick();
         player.render(g);
+        ball.tick();
+        ball.render(g);
 
 
         //End draw

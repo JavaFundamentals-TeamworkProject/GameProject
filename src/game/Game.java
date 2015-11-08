@@ -45,7 +45,7 @@ public class Game implements Runnable{
         this.inputHandler = new InputHandler(this.display);
 
 
-        player = new Player((width - 111) / 2, height - 19, 111, 19);
+        player = new Player(gfx.ImageLoader.loadImage("/bat2.png"),(width - 111) / 2, height - 19, 111, 19);
         bricks = new Bricks();
         ball = new Ball(gfx.ImageLoader.loadImage("/ball.png"),player.boundingBox, this.width, this.height,2);
     }

@@ -1,22 +1,28 @@
 package game;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 public class Player {
     private int playerWidth;
     private int playerHeight;
     private int x, y;
+
     public Rectangle boundingBox;
+
+    private BufferedImage pad;
 
 
     //Constructor
-    public Player(int x, int y, int width, int height){
+    public Player(BufferedImage img, int x, int y, int width, int height){
         this.playerWidth = width;
         this.playerHeight = height;
 
         this.x = x;
         this.y = y;
+
+        this.pad = img;
 
         this.boundingBox = new Rectangle(this.playerWidth, this.playerHeight);
     }
@@ -24,8 +30,6 @@ public class Player {
     //update
     public void tick(){
 
-        //set box bounds
-        this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerWidth);
         //move pad
         if (Game.isMovingLeft){
             this.x += -4;
@@ -36,10 +40,12 @@ public class Player {
                 this.x = Game.width - this.playerWidth;
         }
 
+        //set box bounds
+        this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerWidth);
     }
 
     //draw
     public void render(Graphics g){
-        g.drawImage(gfx.ImageLoader.loadImage("/bat2.png"), this.x, this.y, null);
+        g.drawImage(pad, this.x, this.y, null);
     }
 }

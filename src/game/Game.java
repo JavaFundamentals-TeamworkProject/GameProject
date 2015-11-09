@@ -1,8 +1,6 @@
 package game;
 
 import display.Display;
-import gfx.ImageLoader;
-import javafx.application.Platform;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -130,11 +128,26 @@ public class Game implements Runnable{
 
         if (hasWon){
             // DRAW END GAME SCREEN
+            this.g = bs.getDrawGraphics();
+            g.clearRect(0,0, this.width, this.height);
+            g.drawImage(gfx.ImageLoader.loadImage("/win.png"), 0, 0, this.width, this.height, null);
+            this.bs.show();
+            this.g.dispose();
+
+            //Stop running
             running = false;
+
         }
 
         if (hasLost){
             // DRAW END GAME SCREEN
+            this.g = bs.getDrawGraphics();
+            g.clearRect(0,0, this.width, this.height);
+            g.drawImage(gfx.ImageLoader.loadImage("/GameOver.png"), 0, 0, this.width, this.height, null);
+            this.bs.show();
+            this.g.dispose();
+
+            //Stop running
             running = false;
         }
     }

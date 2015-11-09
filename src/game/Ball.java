@@ -37,6 +37,7 @@ public class Ball {
     private void moveDown() {
         this.YPosition += speed;
     }
+
     private void move() {
         //Deciding where to go to
         if(movement[0]) {
@@ -51,7 +52,7 @@ public class Ball {
         }
 
         //Checking boundaries of the game
-        if(XPosition + ballWidth > gameWidth) {
+        if(this.XPosition + this.ballWidth > gameWidth) {
             movement[0] = false;
         } else if(XPosition <= 0) {
             movement[0] = true;

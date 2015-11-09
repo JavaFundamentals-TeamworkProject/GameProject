@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 public class Game implements Runnable{
     private Display display;
 
-    public  static int width,height;
+    private  static int width,height;
     public String title;
 
     private boolean running = false;
@@ -40,7 +40,7 @@ public class Game implements Runnable{
 
     private void init(){
         this.display = new Display(this.title, this.width, this.height);
-        img = gfx.ImageLoader.loadImage("/background.png");
+        this.img = gfx.ImageLoader.loadImage("/background.png");
 
         this.inputHandler = new InputHandler(this.display);
 
@@ -70,17 +70,24 @@ public class Game implements Runnable{
         g.clearRect(0,0, this.width, this.height);
         g.drawImage(img,0,0,this.width, this.height, null);
         //Start draw
-        player.tick();
+
         player.render(g);
-        ball.tick();
         ball.render(g);
 
-
-        //End draw
+        //End
         this.bs.show();
 
         this.g.dispose();
     }
+
+    public static int getWidth() {
+        return width;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
 
     @Override
     public void run() {

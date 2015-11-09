@@ -36,8 +36,8 @@ public class Player {
             if (this.x < 0) this.x = 0;
         }else if (Game.isMovingRight){
             this.x += 4;
-            if (this.x >  Game.width - this.playerWidth)
-                this.x = Game.width - this.playerWidth;
+            if (this.x >  Game.getWidth() - this.playerWidth)
+                this.x = Game.getWidth() - this.playerWidth;
         }
 
         //set box bounds
@@ -46,6 +46,6 @@ public class Player {
 
     //draw
     public void render(Graphics g){
-        g.drawImage(pad, this.x, this.y, null);
+        g.drawImage(this.pad, this.x, this.y, null);
     }
 }

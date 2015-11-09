@@ -9,7 +9,7 @@ public class Player {
     private int playerHeight;
     private int x, y;
 
-    public Rectangle boundingBox;
+    private Rectangle boundingBox;
 
     private BufferedImage pad;
 
@@ -27,15 +27,19 @@ public class Player {
         this.boundingBox = new Rectangle(this.playerWidth, this.playerHeight);
     }
 
+    public Rectangle getBoundingBox() {
+        return boundingBox;
+    }
+
     //update
     public void tick(){
 
         //move pad
         if (Game.isMovingLeft){
-            this.x += -4;
+            this.x += -10;
             if (this.x < 0) this.x = 0;
         }else if (Game.isMovingRight){
-            this.x += 4;
+            this.x += 10;
             if (this.x >  Game.getWidth() - this.playerWidth)
                 this.x = Game.getWidth() - this.playerWidth;
         }

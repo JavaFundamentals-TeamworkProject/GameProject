@@ -16,7 +16,9 @@ public class InputHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        if (keyCode == KeyEvent.VK_LEFT){
+        if (Game.isWon() || Game.isLost()) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) System.exit(0);
+        }else if (keyCode == KeyEvent.VK_LEFT){
             Game.isMovingLeft = true;
         }else if (keyCode == KeyEvent.VK_RIGHT){
             Game.isMovingRight = true;

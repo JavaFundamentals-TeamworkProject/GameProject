@@ -2,6 +2,7 @@ package game;
 
 import display.Display;
 import gfx.ImageLoader;
+import javafx.application.Platform;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,12 +24,18 @@ public class Game implements Runnable{
 
     private BufferedImage img;
 
-    public static Player player;
-    public static Ball ball;
-    public static Bricks bricks;
+    //make em private
+    private static Player player;
+    private static Ball ball;
+    private static Bricks[][] bricks;
 
     public static boolean isMovingLeft;
     public static boolean isMovingRight;
+
+    private static boolean hasWon;
+    private static boolean hasLost;
+
+    private static int ballCount;
 
     public Game(String title, int height, int width) {
 
@@ -45,9 +52,45 @@ public class Game implements Runnable{
         this.inputHandler = new InputHandler(this.display);
 
 
-        player = new Player(gfx.ImageLoader.loadImage("/bat2.png"),(width - 111) / 2, height - 19, 111, 19);
-        bricks = new Bricks();
-        ball = new Ball(gfx.ImageLoader.loadImage("/ball.png"),player.boundingBox, this.width, this.height,4);
+        this.player = new Player(gfx.ImageLoader.loadImage("/bat2.png"),(this.width - 111) / 2, this.height - 19, 111, 19);
+        this.bricks = new Bricks[11][4];
+        for (int x = 0; x < bricks.length; x++) {
+            for (int y = 0; y < bricks[x].length; y++) {
+                int brickWidth = Game.getWidth() / 11;
+                int brickHeight = (Game.getHeight() / 5) / 4;
+                this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_blue.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+            }
+        }
+        this.ball = new Ball(this, gfx.ImageLoader.loadImage("/ball.png"),player.getBoundingBox(), 5);
+        ballCount = 3;
+    }
+
+    public void missedBall(){
+        ballCount -= 1;
+        if (ballCount == 0){
+            hasLost = true;
+        }
+    }
+
+    public static boolean isWon(){
+        return  hasWon;
+    }
+
+    public static boolean isLost(){
+        return hasLost;
+    }
+
+    public void checkGame(){
+        hasWon = true;
+
+        for (Bricks[] bricks : Game.getBricks()){
+            for (Bricks brick: bricks){
+                if (!brick.isDestroyed()){
+                    hasWon = false;
+
+                }
+            }
+        }
     }
 
     private  void tick(){
@@ -55,8 +98,6 @@ public class Game implements Runnable{
         player.tick();
         //update ball
         ball.tick();
-        //update bricks
-        bricks.tick();
     }
     private  void render(){
         this.bs = display.getCanvas().getBufferStrategy();
@@ -74,10 +115,28 @@ public class Game implements Runnable{
         player.render(g);
         ball.render(g);
 
+        for (Bricks[] brick : bricks){
+            for (Bricks b : brick ){
+                b.render(g);
+            }
+        }
+
         //End
         this.bs.show();
 
         this.g.dispose();
+
+        checkGame();
+
+        if (hasWon){
+            // DRAW END GAME SCREEN
+            running = false;
+        }
+
+        if (hasLost){
+            // DRAW END GAME SCREEN
+            running = false;
+        }
     }
 
     public static int getWidth() {
@@ -86,6 +145,10 @@ public class Game implements Runnable{
 
     public static int getHeight() {
         return height;
+    }
+
+    public static Bricks[][] getBricks(){
+        return bricks;
     }
 
 
@@ -121,6 +184,7 @@ public class Game implements Runnable{
                 ticks = 0;
             }
         }
+
         stop();
     }
     public synchronized void start(){

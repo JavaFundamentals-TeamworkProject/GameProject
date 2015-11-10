@@ -24,7 +24,7 @@ public class Player {
 
         this.pad = img;
 
-        this.boundingBox = new Rectangle(this.playerWidth, this.playerHeight);
+        this.boundingBox = new Rectangle(this.playerWidth, this.playerHeight,x,y);
     }
 
     public Rectangle getBoundingBox() {
@@ -45,7 +45,7 @@ public class Player {
         }
 
         //set box bounds
-        this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerWidth);
+        this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerHeight);
     }
 
     //draw

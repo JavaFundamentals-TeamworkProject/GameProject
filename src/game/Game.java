@@ -36,6 +36,8 @@ public class Game implements Runnable{
 
     private static int ballCount;
 
+    private int startGame = 0;
+
     public Game(String title, int height, int width) {
 
         this.title = title;
@@ -126,6 +128,11 @@ public class Game implements Runnable{
         this.bs.show();
 
         this.g.dispose();
+
+        if (this.startGame == 0){
+            paused = true;
+            startGame++;
+        }
 
         checkGame();
 

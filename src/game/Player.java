@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 public class Player {
     private int playerWidth;
     private int playerHeight;
-    private int x, y;
+    private static int x, y;
 
     private Rectangle boundingBox;
 
@@ -29,6 +29,14 @@ public class Player {
 
     public Rectangle getBoundingBox() {
         return boundingBox;
+    }
+
+    public static void setPlayerX(int pX) {
+        x = pX;
+    }
+
+    public static void setPlayerY(int pY) {
+        y = pY;
     }
 
     //update

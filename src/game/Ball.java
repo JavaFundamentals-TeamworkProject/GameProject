@@ -21,8 +21,8 @@ public class Ball {
         //Movement is an array holding information whether ball is moving right and downwards
         this.movement = new boolean[2];
         this.movement[0] = true; this.movement[1] = true;
-        this.XPosition = Game.getWidth() / 2;
-        this.YPosition = Game.getHeight() / 3;
+        this.XPosition = instance.getWidth() / 2;
+        this.YPosition = instance.getHeight() - 50;
         this.boundingBox = new Rectangle(this.XPosition,this.YPosition, this.ballWidth, this.ballHeight);
     }
 
@@ -53,17 +53,21 @@ public class Ball {
         }
 
         //Checking boundaries of the game
-        if(this.XPosition + this.ballWidth > Game.getWidth()) {
+        if(this.XPosition + this.ballWidth > instance.getWidth()) {
             this.movement[0] = false;
         } else if(XPosition <= 0) {
             this.movement[0] = true;
         } else if(YPosition <= 0) {
             this.movement[1] = true;
-        } else if(YPosition + ballHeight >= Game.getHeight()) {
+        } else if(YPosition + ballHeight >= instance.getHeight()) {
             instance.missedBall();
             System.out.println("You lost a life");
-            this.XPosition = Game.getWidth() / 2;
-            this.YPosition = Game.getHeight() / 3;
+            this.XPosition = instance.getWidth() / 2;
+            this.YPosition = instance.getHeight() - 50;
+            this.movement[1] = false;
+            Player.setPlayerX((instance.getWidth() - 111) / 2);
+            Player.setPlayerY(instance.getHeight() - 19);
+            instance.isPaused(true);
         }
 
         if (this.boundingBox.intersects(this.playerBoundingBox)){
@@ -73,7 +77,7 @@ public class Ball {
             this.movement[1] = false;
         } else {
             // Check if ball collides with brick;
-            for (Bricks[] bricks : Game.getBricks()){
+            for (Bricks[] bricks : instance.getBricks()){
                 for (Bricks brick: bricks){
                     if (brick.collidesWith(new Rectangle(this.XPosition , this.YPosition , this.ballWidth , this.ballHeight))){
                         Rectangle iRect = brick.brickHitBox.intersection(this.boundingBox);

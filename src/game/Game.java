@@ -32,6 +32,7 @@ public class Game implements Runnable{
 
     private static boolean hasWon;
     private static boolean hasLost;
+    public static boolean paused;
 
     private static int ballCount;
 
@@ -77,6 +78,8 @@ public class Game implements Runnable{
     public static boolean isLost(){
         return hasLost;
     }
+
+    public static boolean isPaused(boolean p) {return paused = p;}
 
     public void checkGame(){
         hasWon = true;
@@ -185,9 +188,10 @@ public class Game implements Runnable{
             lastTime = now;
 
             if(delta >= 1) {
-                tick();
-                render();
-
+                if(!paused) {
+                    tick();
+                    render();
+                }
                 ticks++;
                 delta--;
             }

@@ -15,7 +15,13 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-
+        if(e.getKeyCode() == KeyEvent.VK_P) {
+            if(!Game.paused) {
+                Game.isPaused(true);
+            }else{
+                Game.isPaused(false);
+            }
+        }
         if (Game.isWon() || Game.isLost()) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) System.exit(0);
         }else if (keyCode == KeyEvent.VK_LEFT){

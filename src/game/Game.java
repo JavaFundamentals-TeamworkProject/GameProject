@@ -22,7 +22,6 @@ public class Game implements Runnable{
 
     private BufferedImage img;
 
-    //make em private
     private static Player player;
     private static Ball ball;
     private static Bricks[][] bricks;
@@ -59,7 +58,15 @@ public class Game implements Runnable{
             for (int y = 0; y < bricks[x].length; y++) {
                 int brickWidth = Game.getWidth() / 11;
                 int brickHeight = (Game.getHeight() / 5) / 4;
-                this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_blue.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                if (y == 0){
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_blue.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                } else if (y == 1){
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_green.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                } else if (y == 2) {
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_red.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                } else {
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_silver.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                }
             }
         }
         this.ball = new Ball(this, gfx.ImageLoader.loadImage("/ball.png"),player.getBoundingBox(), 5);

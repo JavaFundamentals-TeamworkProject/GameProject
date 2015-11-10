@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Ball {
-
     public Rectangle boundingBox;
     private BufferedImage ballImg;
     private int ballWidth, ballHeight, speed, XPosition, YPosition;
@@ -17,7 +16,6 @@ public class Ball {
         this.ballImg = img;
         this.ballWidth = img.getWidth();
         this.ballHeight = img.getHeight();
-        this.boundingBox = new Rectangle(this.ballWidth,this.ballHeight, this.XPosition + this.ballWidth, this.YPosition + this.ballHeight);
         this.playerBoundingBox = playerBoundingBox;
         this.speed = speed;
         //Movement is an array holding information whether ball is moving right and downwards
@@ -25,6 +23,7 @@ public class Ball {
         this.movement[0] = true; this.movement[1] = true;
         this.XPosition = Game.getWidth() / 2;
         this.YPosition = Game.getHeight() / 3;
+        this.boundingBox = new Rectangle(this.XPosition,this.YPosition, this.ballWidth, this.ballHeight);
     }
 
     private void moveLeft() {
@@ -63,24 +62,41 @@ public class Ball {
         } else if(YPosition + ballHeight >= Game.getHeight()) {
             instance.missedBall();
             System.out.println("You lost a life");
-            this.XPosition = Game.getWidth() / 2;;
+            this.XPosition = Game.getWidth() / 2;
             this.YPosition = Game.getHeight() / 3;
         }
 
         if (this.boundingBox.intersects(this.playerBoundingBox)){
+            Rectangle leftHalfOfPlayer = new Rectangle((int)this.playerBoundingBox.getWidth() / 2, (int)this.playerBoundingBox.getHeight(),
+                    this.playerBoundingBox.x, this.playerBoundingBox.y);
+            this.movement[0] = !this.boundingBox.intersects(leftHalfOfPlayer);
             this.movement[1] = false;
-        }
-
-        // Check if ball collides with brick;
-        for (Bricks[] bricks : Game.getBricks()){
-            for (Bricks brick: bricks){
-                if (brick.collidesWith(new Rectangle(this.XPosition , this.YPosition , this.ballWidth , this.ballHeight))){
-                    brick.destroy();
-                    // make logic
-                    this.movement[1] = true;
-
+        } else {
+            // Check if ball collides with brick;
+            for (Bricks[] bricks : Game.getBricks()){
+                for (Bricks brick: bricks){
+                    if (brick.collidesWith(new Rectangle(this.XPosition , this.YPosition , this.ballWidth , this.ballHeight))){
+                        Rectangle iRect = brick.brickHitBox.intersection(this.boundingBox);
+                        brick.destroy();
+                        // make logic
+                        this.movement[1] = true;
+                        if ((this.boundingBox.x+(this.boundingBox.width/2))<(iRect.x+(iRect.width/2)))
+                        {
+                            this.movement[1] = false;
+                            this.movement[0] = false;
+                        }
+                        if ((this.boundingBox.x+(this.boundingBox.width/2))>(iRect.x+(iRect.width/2)))
+                        {
+                            this.movement[1] = false;
+                            this.movement[0] = true;
+                        }
+                        if ((this.boundingBox.y+(this.boundingBox.height/2))<(iRect.y+(iRect.height/2))) {
+                            this.movement[1] = false;
+                        }
+                    }
                 }
             }
+
         }
 
     }

@@ -85,12 +85,12 @@ public class Ball {
                         // make logic
                         this.movement[1] = true;
                         if ((this.boundingBox.x+(this.boundingBox.width/2))<(iRect.x+(iRect.width/2))) {
-                            this.movement[1] = false;
                             this.movement[0] = false;
+                            this.movement[1] = !this.movement[1];
                         }
                         if ((this.boundingBox.x+(this.boundingBox.width/2))>(iRect.x+(iRect.width/2))) {
-                            this.movement[1] = false;
                             this.movement[0] = true;
+                            this.movement[1] = !this.movement[1];
                         }
                         if ((this.boundingBox.y+(this.boundingBox.height/2))<(iRect.y+(iRect.height/2))) {
                             this.movement[1] = false;

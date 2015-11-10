@@ -11,27 +11,29 @@ public class InputHandler implements KeyListener {
     public InputHandler(Display display){
         display.getCanvas().addKeyListener(this);
     }
-
+    private Game game;
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if(e.getKeyCode() == KeyEvent.VK_P) {
-            if(!Game.paused) {
-                Game.isPaused(true);
-            }else{
-                Game.isPaused(false);
+        if(game.State == Game.STATE.GAME) {
+            if (e.getKeyCode() == KeyEvent.VK_P) {
+                if (!Game.paused) {
+                    Game.isPaused(true);
+                } else {
+                    Game.isPaused(false);
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (Game.paused) {
+                    Game.isPaused(false);
+                }
             }
-        } else if (e.getKeyCode()== KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_SPACE){
-            if (Game.paused){
-                Game.isPaused(false);
+            if (Game.isWon() || Game.isLost()) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) System.exit(0);
+            } else if (keyCode == KeyEvent.VK_LEFT) {
+                Game.isMovingLeft = true;
+            } else if (keyCode == KeyEvent.VK_RIGHT) {
+                Game.isMovingRight = true;
             }
-        }
-        if (Game.isWon() || Game.isLost()) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) System.exit(0);
-        }else if (keyCode == KeyEvent.VK_LEFT){
-            Game.isMovingLeft = true;
-        }else if (keyCode == KeyEvent.VK_RIGHT){
-            Game.isMovingRight = true;
         }
     }
 

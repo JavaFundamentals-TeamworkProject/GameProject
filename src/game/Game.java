@@ -17,6 +17,7 @@ public class Game implements Runnable{
     private Thread thread;
 
     private InputHandler inputHandler;
+    private MouseInput mouseInput;
     private BufferStrategy bs;
     private Graphics g;
 
@@ -35,6 +36,16 @@ public class Game implements Runnable{
 
     private static int ballCount;
 
+    private Menu menu;
+
+    public static enum STATE{
+        MENU,
+        GAME,
+        HELP
+    };
+
+    public static STATE State = STATE.MENU;
+
     private int startGame = 0;
 
     public Game(String title, int height, int width) {
@@ -50,7 +61,9 @@ public class Game implements Runnable{
         this.img = gfx.ImageLoader.loadImage("/background.png");
 
         this.inputHandler = new InputHandler(this.display);
+        this.mouseInput = new MouseInput(this.display);
 
+        menu = new Menu();
 
         this.player = new Player(gfx.ImageLoader.loadImage("/bat2.png"),(this.width - 111) / 2, this.height - 19, 111, 19);
         this.bricks = new Bricks[11][4];
@@ -104,10 +117,12 @@ public class Game implements Runnable{
     }
 
     private  void tick(){
-        //update player
-        player.tick();
-        //update ball
-        ball.tick();
+        if(State == STATE.GAME) {
+            //update player
+            player.tick();
+            //update ball
+            ball.tick();
+        }
     }
     private  void render(){
         this.bs = display.getCanvas().getBufferStrategy();
@@ -121,25 +136,40 @@ public class Game implements Runnable{
         g.clearRect(0,0, this.width, this.height);
         g.drawImage(img,0,0,this.width, this.height, null);
         //Start draw
+        if(State == STATE.GAME) {
+            player.render(g);
+            ball.render(g);
 
-        player.render(g);
-        ball.render(g);
-
-        for (Bricks[] brick : bricks){
-            for (Bricks b : brick ){
-                b.render(g);
+            for (Bricks[] brick : bricks) {
+                for (Bricks b : brick) {
+                    b.render(g);
+                }
+            }
+            if (this.startGame == 0){
+                paused = true;
+                startGame++;
             }
         }
-
+        else if(State == STATE.MENU){
+            menu.render(g);
+        }
+        else if(State == STATE.HELP){
+            g.setColor(Color.gray);
+            Font fnt = new Font("Comic Sans MS", Font.BOLD, 50);
+            g.setFont(fnt);
+            g.drawString("Controls",100,100);
+            g.drawImage(gfx.ImageLoader.loadImage("/Controls.png"),12,120,786,120,null);
+            g.setColor(Color.gray);
+            Font fnt1 = new Font("Comic Sans MS", Font.BOLD, 90);
+            g.setFont(fnt1);
+            g.drawString("BACK",width/2 -120,500);
+        }
         //End
         this.bs.show();
 
         this.g.dispose();
 
-        if (this.startGame == 0){
-            paused = true;
-            startGame++;
-        }
+
 
         checkGame();
 

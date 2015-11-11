@@ -2,18 +2,9 @@ package game;
 
 import display.Display;
 
-import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
-
 
 public class Game implements Runnable{
     private Display display;

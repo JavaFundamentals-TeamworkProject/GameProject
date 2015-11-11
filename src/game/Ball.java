@@ -11,6 +11,9 @@ public class Ball {
     private boolean[] movement;
     private Game instance;
 
+    private Sound brickBreak = new Sound("res/Break-Sound.wav");
+    private Sound lostLife = new Sound("res/LifeLost.wav");
+
     public Ball(Game inst, BufferedImage img, Rectangle playerBoundingBox, int speed){
         this.instance = inst;
         this.ballImg = img;
@@ -62,8 +65,7 @@ public class Ball {
         } else if(YPosition + ballHeight >= instance.getHeight()) {
             instance.missedBall();
             if (instance.getBalls() > 0){
-                Sound lostLife = new Sound("res/LifeLost.wav");
-                lostLife.play();
+                this.lostLife.play();
             }
             this.XPosition = instance.getWidth() / 2;
             this.YPosition = instance.getHeight() - 43;
@@ -85,9 +87,8 @@ public class Ball {
                     if (brick.collidesWith(new Rectangle(this.XPosition , this.YPosition , this.ballWidth , this.ballHeight))){
                         Rectangle iRect = brick.brickHitBox.intersection(this.boundingBox);
                         brick.destroy();
-                        //instance.playBrickBreakSound();
-                        Sound brickBreak = new Sound("res/Break-Sound.wav");
-                        brickBreak.play();
+                        //Sound brickBreak = new Sound("res/Break-Sound.wav");
+                        this.brickBreak.play();
                         // make logic
                         this.movement[1] = true;
                         if ((this.boundingBox.x+(this.boundingBox.width/2))<(iRect.x+(iRect.width/2))) {

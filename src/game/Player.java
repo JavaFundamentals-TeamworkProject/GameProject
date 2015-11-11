@@ -42,6 +42,9 @@ public class Player {
     //update
     public void tick(){
 
+        //set box bounds
+        this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerHeight);
+        
         //move pad
         if (Game.isMovingLeft){
             this.x += -10;
@@ -52,8 +55,7 @@ public class Player {
                 this.x = Game.getWidth() - this.playerWidth;
         }
 
-        //set box bounds
-        this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerHeight);
+
     }
 
     //draw

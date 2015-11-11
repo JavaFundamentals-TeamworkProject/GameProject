@@ -61,7 +61,6 @@ public class Ball {
             this.movement[1] = true;
         } else if(YPosition + ballHeight >= instance.getHeight()) {
             instance.missedBall();
-            System.out.println("You lost a life");
             this.XPosition = instance.getWidth() / 2;
             this.YPosition = instance.getHeight() - 50;
             this.movement[1] = false;

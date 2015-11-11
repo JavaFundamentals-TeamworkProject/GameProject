@@ -48,6 +48,8 @@ public class Game implements Runnable{
 
     private int startGame = 0;
 
+    private BufferedImage livesImg = gfx.ImageLoader.loadImage("/Heart.png");
+
     public Game(String title, int height, int width) {
 
         this.title = title;
@@ -148,6 +150,10 @@ public class Game implements Runnable{
             if (this.startGame == 0){
                 paused = true;
                 startGame++;
+            }
+
+            for (int i = 0; i < this.ballCount; i++) {
+                g.drawImage(this.livesImg, 15 * i, this.height - 25, null);
             }
         }
         else if(State == STATE.MENU){

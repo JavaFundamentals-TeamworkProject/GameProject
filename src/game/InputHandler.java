@@ -27,6 +27,11 @@ public class InputHandler implements KeyListener {
                     Game.isPaused(false);
                 }
             }
+
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                System.exit(0);
+            }
+
             if (Game.isWon() || Game.isLost()) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) System.exit(0);
             } else if (keyCode == KeyEvent.VK_LEFT) {

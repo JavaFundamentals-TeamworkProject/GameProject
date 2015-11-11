@@ -96,6 +96,10 @@ public class Game implements Runnable{
         ballCount = 3;
     }
 
+    public int getBalls(){
+        return this.ballCount;
+    }
+
     public void missedBall(){
         ballCount -= 1;
         if (ballCount == 0){
@@ -137,6 +141,13 @@ public class Game implements Runnable{
         AudioClip clip = Applet.newAudioClip(url);
         clip.play();
     }
+
+    public void lostLife(){
+        URL url = Game.class.getResource("/LifeLost.wav");
+        AudioClip clip = Applet.newAudioClip(url);
+        clip.play();
+    }
+
 
     public synchronized void playBrickBreakSound(){
         try {

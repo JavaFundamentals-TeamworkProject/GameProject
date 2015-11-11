@@ -2,9 +2,17 @@ package game;
 
 import display.Display;
 
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
 
 
 public class Game implements Runnable{
@@ -38,7 +46,7 @@ public class Game implements Runnable{
 
     private Menu menu;
 
-    public static enum STATE{
+    public  enum STATE{
         MENU,
         GAME,
         HELP
@@ -118,7 +126,34 @@ public class Game implements Runnable{
         }
     }
 
-    private  void tick(){
+    public void playDefeatSound(){
+        URL url = Game.class.getResource("/lose.wav");
+        AudioClip clip = Applet.newAudioClip(url);
+        clip.play();
+    }
+
+    public void playWinSound(){
+        URL url = Game.class.getResource("/win.wav");
+        AudioClip clip = Applet.newAudioClip(url);
+        clip.play();
+    }
+
+    public synchronized void playBrickBreakSound(){
+        try {
+            AudioInputStream asd = AudioSystem.getAudioInputStream(new File("res/Break-Sound.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(asd);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void tick(){
         if(State == STATE.GAME) {
             //update player
             player.tick();
@@ -181,6 +216,7 @@ public class Game implements Runnable{
 
         if (hasWon){
             // DRAW END GAME SCREEN
+            playWinSound();
             this.g = bs.getDrawGraphics();
             g.clearRect(0,0, this.width, this.height);
             g.drawImage(gfx.ImageLoader.loadImage("/win.png"), 0, 0, this.width, this.height, null);
@@ -194,6 +230,7 @@ public class Game implements Runnable{
 
         if (hasLost){
             // DRAW END GAME SCREEN
+            playDefeatSound();
             this.g = bs.getDrawGraphics();
             g.clearRect(0,0, this.width, this.height);
             g.drawImage(gfx.ImageLoader.loadImage("/GameOver.png"), 0, 0, this.width, this.height, null);
@@ -216,7 +253,6 @@ public class Game implements Runnable{
     public static Bricks[][] getBricks(){
         return bricks;
     }
-
 
     @Override
     public void run() {

@@ -81,6 +81,7 @@ public class Ball {
                     if (brick.collidesWith(new Rectangle(this.XPosition , this.YPosition , this.ballWidth , this.ballHeight))){
                         Rectangle iRect = brick.brickHitBox.intersection(this.boundingBox);
                         brick.destroy();
+                        instance.playBrickBreakSound();
                         // make logic
                         this.movement[1] = true;
                         if ((this.boundingBox.x+(this.boundingBox.width/2))<(iRect.x+(iRect.width/2))) {

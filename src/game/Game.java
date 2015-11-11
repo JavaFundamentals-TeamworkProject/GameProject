@@ -74,13 +74,13 @@ public class Game implements Runnable{
                 int brickWidth = Game.getWidth() / 11;
                 int brickHeight = (Game.getHeight() / 5) / 4;
                 if (y == 0){
-                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_blue.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_blue.png"), x * brickWidth, y * brickHeight + 50, brickWidth, brickHeight);
                 } else if (y == 1){
-                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_green.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_green.png"), x * brickWidth, y * brickHeight + 50, brickWidth, brickHeight);
                 } else if (y == 2) {
-                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_red.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_red.png"), x * brickWidth, y * brickHeight + 50, brickWidth, brickHeight);
                 } else {
-                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_silver.png"), x * brickWidth, y * brickHeight, brickWidth, brickHeight);
+                    this.bricks[x][y] = new Bricks(gfx.ImageLoader.loadImage("/brick_silver.png"), x * brickWidth, y * brickHeight + 50, brickWidth, brickHeight);
                 }
             }
         }
@@ -153,7 +153,7 @@ public class Game implements Runnable{
             }
 
             for (int i = 0; i < this.ballCount; i++) {
-                g.drawImage(this.livesImg, 15 * i, this.height - 25, null);
+                g.drawImage(this.livesImg, 15 * i, this.height - 40, null);
             }
         }
         else if(State == STATE.MENU){

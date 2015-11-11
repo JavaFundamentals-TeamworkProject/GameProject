@@ -44,7 +44,7 @@ public class Player {
 
         //set box bounds
         this.boundingBox.setBounds(this.x, this.y, this.playerWidth, this.playerHeight);
-        
+
         //move pad
         if (Game.isMovingLeft){
             this.x += -10;

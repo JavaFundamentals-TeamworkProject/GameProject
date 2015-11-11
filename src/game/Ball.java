@@ -22,7 +22,7 @@ public class Ball {
         this.movement = new boolean[2];
         this.movement[0] = true; this.movement[1] = true;
         this.XPosition = instance.getWidth() / 2;
-        this.YPosition = instance.getHeight() - 50;
+        this.YPosition = instance.getHeight() - 48;
         this.boundingBox = new Rectangle(this.XPosition,this.YPosition, this.ballWidth, this.ballHeight);
     }
 
@@ -62,7 +62,7 @@ public class Ball {
         } else if(YPosition + ballHeight >= instance.getHeight()) {
             instance.missedBall();
             this.XPosition = instance.getWidth() / 2;
-            this.YPosition = instance.getHeight() - 50;
+            this.YPosition = instance.getHeight() - 43;
             this.movement[1] = false;
             Player.setPlayerX((instance.getWidth() - 111) / 2);
             Player.setPlayerY(instance.getHeight() - 19);

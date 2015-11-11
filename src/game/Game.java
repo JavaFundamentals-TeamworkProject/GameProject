@@ -130,40 +130,6 @@ public class Game implements Runnable{
         }
     }
 
-    public void playDefeatSound(){
-        URL url = Game.class.getResource("/lose.wav");
-        AudioClip clip = Applet.newAudioClip(url);
-        clip.play();
-    }
-
-    public void playWinSound(){
-        URL url = Game.class.getResource("/win.wav");
-        AudioClip clip = Applet.newAudioClip(url);
-        clip.play();
-    }
-
-    public void lostLife(){
-        URL url = Game.class.getResource("/LifeLost.wav");
-        AudioClip clip = Applet.newAudioClip(url);
-        clip.play();
-    }
-
-
-    public synchronized void playBrickBreakSound(){
-        try {
-            AudioInputStream asd = AudioSystem.getAudioInputStream(new File("res/Break-Sound.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(asd);
-            clip.start();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void tick(){
         if(State == STATE.GAME) {
             //update player
@@ -227,7 +193,8 @@ public class Game implements Runnable{
 
         if (hasWon){
             // DRAW END GAME SCREEN
-            playWinSound();
+            Sound win = new Sound("res/win.wav");
+            win.play();
             this.g = bs.getDrawGraphics();
             g.clearRect(0,0, this.width, this.height);
             g.drawImage(gfx.ImageLoader.loadImage("/win.png"), 0, 0, this.width, this.height, null);
@@ -241,7 +208,8 @@ public class Game implements Runnable{
 
         if (hasLost){
             // DRAW END GAME SCREEN
-            playDefeatSound();
+            Sound lose = new Sound("res/lose.wav");
+            lose.play();
             this.g = bs.getDrawGraphics();
             g.clearRect(0,0, this.width, this.height);
             g.drawImage(gfx.ImageLoader.loadImage("/GameOver.png"), 0, 0, this.width, this.height, null);

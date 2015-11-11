@@ -62,7 +62,8 @@ public class Ball {
         } else if(YPosition + ballHeight >= instance.getHeight()) {
             instance.missedBall();
             if (instance.getBalls() > 0){
-                instance.lostLife();
+                Sound lostLife = new Sound("res/LifeLost.wav");
+                lostLife.play();
             }
             this.XPosition = instance.getWidth() / 2;
             this.YPosition = instance.getHeight() - 43;
@@ -84,7 +85,9 @@ public class Ball {
                     if (brick.collidesWith(new Rectangle(this.XPosition , this.YPosition , this.ballWidth , this.ballHeight))){
                         Rectangle iRect = brick.brickHitBox.intersection(this.boundingBox);
                         brick.destroy();
-                        instance.playBrickBreakSound();
+                        //instance.playBrickBreakSound();
+                        Sound brickBreak = new Sound("res/Break-Sound.wav");
+                        brickBreak.play();
                         // make logic
                         this.movement[1] = true;
                         if ((this.boundingBox.x+(this.boundingBox.width/2))<(iRect.x+(iRect.width/2))) {
